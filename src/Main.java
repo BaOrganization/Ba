@@ -1,6 +1,9 @@
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 
 public class Main {
@@ -18,6 +21,13 @@ public class Main {
 		fr.setSize(new Dimension((int) (height*resolution), height));
 		fr.setDefaultCloseOperation(3);
 		fr.setLocationRelativeTo(new JFrame());
+		{
+			JMenuBar mb = new JMenuBar();
+			mb.add(new JMenu("BA") {});
+			mb.add(new JMenu("Datei") {});
+			mb.add(new JMenu("Help") {});
+			fr.setJMenuBar(mb);
+		}
 		fr.setVisible(running);
 	}
 }
