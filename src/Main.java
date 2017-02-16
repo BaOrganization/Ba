@@ -30,7 +30,7 @@ public class Main {
 			fr.setJMenuBar(mb);
 		}
 		fr.setVisible(running);
-		System.out.println(":)");
+		System.out.println("Works :D");
 	}
 	
 }
