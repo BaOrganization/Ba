@@ -6,6 +6,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingUtilities;
 
+/** Copyright: Ba
+**/
 public class Main {
 	static boolean running = false;
 	public static void main(String ... args) {
