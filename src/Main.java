@@ -26,6 +26,8 @@ public class Main {
 			mb.add(new JMenu("BA") {});
 			mb.add(new JMenu("Datei") {});
 			mb.add(new JMenu("Help") {});
+			
+			
 			fr.setJMenuBar(mb);
 		}
 		fr.setVisible(running);
