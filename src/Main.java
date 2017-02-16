@@ -28,7 +28,9 @@ public class Main {
 			mb.add(new JMenu("BA") {});
 			mb.add(new JMenu("Datei") {});
 			mb.add(new JMenu("Help") {});
-			mb.add(new JMenu("Neu") {});
+			
+			System.out.println("Ok alternativ!");
+			
 			fr.setJMenuBar(mb);
 		}
 		fr.setVisible(running);
