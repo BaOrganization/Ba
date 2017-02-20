@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 
 /** Copyright: Ba
 **/
-public class Main {
+public class Main {//new
 	static boolean running = false;
 	public static void main(String ... args) {
 		running = true;
