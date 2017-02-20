@@ -41,8 +41,8 @@ public class Main {
 		
 		
 		fr.setVisible(running);
-		System.out.println("Works :D");//eclipse port
-		//neues kommentar
+		System.out.println("Works :D");//eclipse por
+		//shitty eclipse
 		
 }
 	
