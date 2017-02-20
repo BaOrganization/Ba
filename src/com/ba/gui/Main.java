@@ -1,8 +1,11 @@
+package com.ba.gui;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
 /** Copyright: Ba
@@ -29,6 +32,14 @@ public class Main {
 			mb.add(new JMenu("Help") {});
 			fr.setJMenuBar(mb);
 		}
+		
+		JPanel p1 = new JPanel();
+		JPanel p2 = new JPanel();
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, p1, p2);
+		splitPane.setDividerLocation(0.5);
+		fr.add(splitPane);
+		
+		
 		fr.setVisible(running);
 		System.out.println("Works :D");//eclipse port
 		//neues kommentar
