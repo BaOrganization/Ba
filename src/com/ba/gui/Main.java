@@ -10,7 +10,7 @@ import javax.swing.SwingUtilities;
 
 /** Copyright: Ba
 **/
-public class Main {//new
+public class Main {
 	static boolean running = false;
 	public static void main(String ... args) {
 		running = true;
@@ -41,9 +41,7 @@ public class Main {//new
 		
 		
 		fr.setVisible(running);
-		System.out.println("Works :D");//eclipse por
-		//shitty eclipse
-		
+		System.out.println("Works :D");
 }
 	
 }
