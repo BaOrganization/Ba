@@ -1,12 +1,15 @@
 package com.ba.gui;
+import java.awt.Color;
 import java.awt.Dimension;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
+import javax.swing.border.BevelBorder;
 
 /** Copyright: Ba
 **/
@@ -24,6 +27,7 @@ public class Main {
 		JFrame fr = new JFrame("BA");
 		fr.setSize(new Dimension((int) (height*resolution), height));
 		fr.setDefaultCloseOperation(3);
+		fr.setResizable(false);
 		fr.setLocationRelativeTo(new JFrame());
 		{
 			JMenuBar mb = new JMenuBar();
@@ -33,15 +37,17 @@ public class Main {
 			fr.setJMenuBar(mb);
 		}
 		
-		JPanel p1 = new JPanel();
-		JPanel p2 = new JPanel();
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, p1, p2);
-		splitPane.setDividerLocation(0.5);
+		JPanel pLeft = new JPanel();
+		pLeft.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+		JPanel pRight = new JPanel();
+		pRight.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, pLeft, pRight);
+		splitPane.setDividerLocation((int) (resolution*height/2.0));
 		fr.add(splitPane);
 		
 		
 		fr.setVisible(running);
-		System.out.println("Works :D");
+		System.out.println("Works :D: " + running);
 }
 	
 }
