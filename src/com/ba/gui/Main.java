@@ -75,7 +75,7 @@ public class Main implements ActionListener{
 	}
 	public void actionPerformed(ActionEvent e)
 	{
-		//FileChooser:
+		//a.3:FileChooser: Besser: JTree!
 		if(e.getActionCommand() == Oeffnen.getActionCommand()){
 			JFileChooser fc = new JFileChooser();
 			fc.setAcceptAllFileFilterUsed(false);
