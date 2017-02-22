@@ -1,6 +1,8 @@
 package com.ba.gui;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -21,13 +23,16 @@ public class Main {
 			public void run() {new Main().createGui();}
 		});
 	}
+	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	public transient float resolution = 1.45f;
+	public transient int width = gd.getDisplayMode().getWidth();
 	public transient int height = 600;
 	void createGui() {
 		JFrame fr = new JFrame("Betriebsanweisungen erstellen");
-		fr.setSize(new Dimension((int) (height*resolution), height));
+		fr.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+		//fr.setSize(new Dimension((int) (height*resolution), height));
+		//fr.setResizable(false);
 		fr.setDefaultCloseOperation(3);
-		fr.setResizable(false);
 		fr.setLocationRelativeTo(new JFrame());
 		{
 			JMenuBar mb = new JMenuBar();
@@ -42,7 +47,7 @@ public class Main {
 		JPanel pRight = new JPanel();
 		pRight.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, pLeft, pRight);
-		splitPane.setDividerLocation((int) (resolution*height/2.0));
+		splitPane.setDividerLocation((int) (width/2.0));
 		fr.add(splitPane);
 		
 		
