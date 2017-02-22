@@ -6,9 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -75,7 +73,7 @@ public class Main implements ActionListener{
 	}
 	public void actionPerformed(ActionEvent e)
 	{
-		//a.3:FileChooser: Besser: JTree!
+		//FileChooser
 		if(e.getActionCommand() == Oeffnen.getActionCommand()){
 			JFileChooser fc = new JFileChooser();
 			fc.setAcceptAllFileFilterUsed(false);
@@ -84,7 +82,7 @@ public class Main implements ActionListener{
 			if(dialog == 0){
 				temp = fc.getSelectedFile();//a.2: Datei in temp gespeichert. Pdf-Opener?
 				aktuellesFile.setText(fc.getCurrentDirectory().toString() + "/" + temp.getName());
-				//Pfad im Label gespeichert
+				//Pfad der pdf im Label aktuellesFile gespeichert
 			}
 		}
 	}
