@@ -1,6 +1,5 @@
 package com.ba.gui;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
@@ -24,14 +23,13 @@ public class Main {
 		});
 	}
 	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-	public transient float resolution = 1.45f;
 	public transient int width = gd.getDisplayMode().getWidth();
+	public transient float resolution = 1.45f;
 	public transient int height = 600;
 	void createGui() {
 		JFrame fr = new JFrame("Betriebsanweisungen erstellen");
 		fr.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-		//fr.setSize(new Dimension((int) (height*resolution), height));
-		//fr.setResizable(false);
+		fr.setResizable(true);//a.comment 1:lieber true, wir müssten aber anpassen, wenn man es kleiner zieht
 		fr.setDefaultCloseOperation(3);
 		fr.setLocationRelativeTo(new JFrame());
 		{
