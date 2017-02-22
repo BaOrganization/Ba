@@ -24,7 +24,7 @@ public class Main {
 	public transient float resolution = 1.45f;
 	public transient int height = 600;
 	void createGui() {
-		JFrame fr = new JFrame("BA");
+		JFrame fr = new JFrame("Betriebsanweisungen erstellen");
 		fr.setSize(new Dimension((int) (height*resolution), height));
 		fr.setDefaultCloseOperation(3);
 		fr.setResizable(false);
