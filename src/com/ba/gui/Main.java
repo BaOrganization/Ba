@@ -33,13 +33,14 @@ public class Main implements ActionListener{
 	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	public transient int width = gd.getDisplayMode().getWidth();
 	public transient float resolution = 1.45f;
+	public transient int widthnormal = 900;
 	public transient int height = 600;
 	void createGui(){
 		aktuellesFile = new JLabel("Keine Datei ausgewählt");
 		aktuellesFile.setBounds(50,220,300,30);
 		JFrame fr = new JFrame("Betriebsanweisungen erstellen");
 		fr.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-		fr.setSize(900,700); //Mindestgröße des Jframes
+		fr.setSize(widthnormal,height); //Mindestgröße des Jframes
 		fr.setResizable(true);
 		fr.setDefaultCloseOperation(3);
 		fr.setLocationRelativeTo(new JFrame());
@@ -67,6 +68,9 @@ public class Main implements ActionListener{
 		pRight.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, pLeft, pRight);
 		splitPane.setDividerLocation((int) (width/2.0));
+		if(fr.isMaximumSizeSet()!=true){
+			splitPane.setDividerLocation(widthnormal/2.0);
+		}
 		fr.add(splitPane);
 
 		fr.setVisible(running);
