@@ -39,7 +39,7 @@ public class Main implements ActionListener{
 		aktuellesFile = new JLabel("Keine Datei ausgewählt");
 		aktuellesFile.setBounds(50,220,300,30);
 		JFrame fr = new JFrame("Betriebsanweisungen erstellen");
-		fr.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+		//fr.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 		fr.setSize(widthnormal,height); //Mindestgröße des Jframes
 		fr.setResizable(true);
 		fr.setDefaultCloseOperation(3);
@@ -67,9 +67,11 @@ public class Main implements ActionListener{
 		JPanel pRight = new JPanel();
 		pRight.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, pLeft, pRight);
+		if(fr.MAXIMIZED_BOTH != 0){
 		splitPane.setDividerLocation((int) (width/2.0));
-		if(fr.isMaximumSizeSet()!=true){
-			splitPane.setDividerLocation(widthnormal/2.0);
+		}
+		else{
+		splitPane.setDividerLocation((int) (fr.getWidth()/2.0));
 		}
 		fr.add(splitPane);
 
