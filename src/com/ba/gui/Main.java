@@ -39,7 +39,8 @@ public class Main implements ActionListener{
 		aktuellesFile.setBounds(50,220,300,30);
 		JFrame fr = new JFrame("Betriebsanweisungen erstellen");
 		fr.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-		fr.setResizable(true);//a.comment 1:lieber true, wir müssten aber anpassen, wenn man es kleiner zieht
+		fr.setSize(900,700); //Mindestgröße des Jframes
+		fr.setResizable(true);
 		fr.setDefaultCloseOperation(3);
 		fr.setLocationRelativeTo(new JFrame());
 
