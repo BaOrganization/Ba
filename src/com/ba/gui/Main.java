@@ -32,16 +32,15 @@ public class Main implements ActionListener{
 	}
 	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	public transient int width = gd.getDisplayMode().getWidth();
-	public transient float resolution = 1.45f;
 	public transient int widthnormal = 900;
 	public transient int height = 600;
 	void createGui(){
-		aktuellesFile = new JLabel("Keine Datei ausgew‰hlt");
+		aktuellesFile = new JLabel("Keine Datei ausgew√§hlt");
 		aktuellesFile.setBounds(50,220,300,30);
 		JFrame fr = new JFrame("Betriebsanweisungen erstellen");
-		//fr.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-		fr.setSize(widthnormal,height); //Mindestgrˆﬂe des Jframes
-		fr.setResizable(true);
+		fr.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+		fr.setSize(widthnormal,height); //Mindestgr√∂√üe des Jframes
+		fr.setResizable(false);
 		fr.setDefaultCloseOperation(3);
 		fr.setLocationRelativeTo(new JFrame());
 
@@ -53,7 +52,7 @@ public class Main implements ActionListener{
 			mb.add(BA);
 			mb.add(Datei);
 			mb.add(Help);
-			Oeffnen = new JMenuItem("÷ffnen");
+			Oeffnen = new JMenuItem("√ñffnen");
 			Oeffnen.addActionListener(this);
 			JMenuItem Speichern = new JMenuItem("Speichern");
 			Datei.add(Oeffnen);
@@ -67,14 +66,8 @@ public class Main implements ActionListener{
 		JPanel pRight = new JPanel();
 		pRight.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, pLeft, pRight);
-		if(fr.MAXIMIZED_BOTH != 0){
-		splitPane.setDividerLocation((int) (width/2.0));
-		}
-		else{
-		splitPane.setDividerLocation((int) (fr.getWidth()/2.0));
-		}
+		splitPane.setDividerLocation((int) (Width()/2.0));
 		fr.add(splitPane);
-
 		fr.setVisible(running);
 
 	}
@@ -85,7 +78,7 @@ public class Main implements ActionListener{
 			JFileChooser fc = new JFileChooser();
 			fc.setAcceptAllFileFilterUsed(false);
 			fc.addChoosableFileFilter(new filterpdf());
-			int dialog = fc.showDialog(fc, "÷ffnen");
+			int dialog = fc.showDialog(fc, "√ñffnen");
 			if(dialog == 0){
 				temp = fc.getSelectedFile();//a.2: Datei in temp gespeichert. Pdf-Opener?
 				aktuellesFile.setText(fc.getCurrentDirectory().toString() + "/" + temp.getName());
