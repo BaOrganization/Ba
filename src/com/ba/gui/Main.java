@@ -1,5 +1,6 @@
 package com.ba.gui;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
@@ -35,12 +36,12 @@ public class Main implements ActionListener{
 	public transient int widthnormal = 900;
 	public transient int height = 600;
 	void createGui(){
-		aktuellesFile = new JLabel("Keine Datei ausgew√§hlt");
+		aktuellesFile = new JLabel("Keine Datei ausgew‰hlt");
 		aktuellesFile.setBounds(50,220,300,30);
 		JFrame fr = new JFrame("Betriebsanweisungen erstellen");
-		fr.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-		fr.setSize(widthnormal,height); //Mindestgr√∂√üe des Jframes
-		fr.setResizable(false);
+		fr.setExtendedState(Frame.MAXIMIZED_BOTH);
+		fr.setSize(widthnormal,height); //Mindestgrˆﬂe des Jframes
+		fr.setResizable(true);
 		fr.setDefaultCloseOperation(3);
 		fr.setLocationRelativeTo(new JFrame());
 
@@ -52,7 +53,7 @@ public class Main implements ActionListener{
 			mb.add(BA);
 			mb.add(Datei);
 			mb.add(Help);
-			Oeffnen = new JMenuItem("√ñffnen");
+			Oeffnen = new JMenuItem("÷ffnen");
 			Oeffnen.addActionListener(this);
 			JMenuItem Speichern = new JMenuItem("Speichern");
 			Datei.add(Oeffnen);
@@ -66,7 +67,7 @@ public class Main implements ActionListener{
 		JPanel pRight = new JPanel();
 		pRight.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, pLeft, pRight);
-		splitPane.setDividerLocation((int) (Width()/2.0));
+		splitPane.setDividerLocation((int) (width/2.0));
 		fr.add(splitPane);
 		fr.setVisible(running);
 
