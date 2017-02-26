@@ -49,7 +49,7 @@ public class Main implements ActionListener{
 			JMenuBar mb = new JMenuBar();
 			JMenu BA = new JMenu("BA");
 			JMenu Datei = new JMenu("Datei");
-			JMenu Help = new JMenu("Help");
+			JMenu Help = new JMenu("Hilfe");
 			mb.add(BA);
 			mb.add(Datei);
 			mb.add(Help);
@@ -79,7 +79,7 @@ public class Main implements ActionListener{
 			JFileChooser fc = new JFileChooser();
 			fc.setAcceptAllFileFilterUsed(false);
 			fc.addChoosableFileFilter(new filterpdf());
-			int dialog = fc.showDialog(fc, "Ã–ffnen");
+			int dialog = fc.showDialog(fc, "Öffnen");
 			if(dialog == 0){
 				temp = fc.getSelectedFile();//a.2: Datei in temp gespeichert. Pdf-Opener?
 				aktuellesFile.setText(fc.getCurrentDirectory().toString() + "/" + temp.getName());
