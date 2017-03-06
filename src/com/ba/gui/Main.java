@@ -24,6 +24,7 @@ public class Main implements ActionListener{
 	public File temp;
 	public JLabel aktuellesFile;
 	public JMenuItem Oeffnen;
+	public JMenuItem Drucken;
 	static boolean running = false;
 	public static void main(String ... args) {
 		running = true;
@@ -55,9 +56,12 @@ public class Main implements ActionListener{
 			mb.add(Help);
 			Oeffnen = new JMenuItem("Öffnen");
 			Oeffnen.addActionListener(this);
+			Drucken = new JMenuItem("Drucken");
+			Drucken.addActionListener(this);
 			JMenuItem Speichern = new JMenuItem("Speichern");
 			Datei.add(Oeffnen);
 			Datei.add(Speichern);
+			Datei.add(Drucken);
 
 			fr.setJMenuBar(mb);
 		}
