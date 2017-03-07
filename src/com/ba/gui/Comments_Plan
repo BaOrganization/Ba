@@ -1,7 +1,11 @@
-1. Dateiexplorer (fehlt nur noch PDF-Opener (vgl a.2))
+1. Dateiexplorer (fertig)
 2. Speichern
 3. Drucken (Tutorial: https://www.youtube.com/watch?v=Q9ZNrfsmI2w&index=5&list=PL13I0cBsOJUdips5ZSFzVUF8PkzdY12kT&ab_channel=JaDaHB1)
-4. Umlaute wurden geändert. Problem?
+4. Umlaute wurden geÃ¤ndert. Problem?
+5. PDF-Viewer 
 Comments von mir (Andreas) sind als a.#: markiert
 
 #j: damit das mit den Umlauten klappt sollten wir in eclipse alle das encoding utf-8 verwenden :) 
+a: Hab' gedacht das ist Standard XD Muss in der Schule noch eingestellt werden!
+@Tobias, du auch :D  :
+Window -> Preferences -> General -> Workspace -> Text file encoding: Other:UTF-8
