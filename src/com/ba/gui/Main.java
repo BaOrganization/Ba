@@ -121,7 +121,7 @@ public class Main implements ActionListener{
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			} 
-			temp.deleteOnExit();
+			//temp.deleteOnExit();
 			if (aktuellesFile == null) {
 				System.err.println("Die Datei ist beschädigt oder hat nicht die Endung .pdf!");
 			} 
