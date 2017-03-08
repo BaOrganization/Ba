@@ -5,6 +5,8 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.BorderFactory;
@@ -16,11 +18,12 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
+
 //PdfViewer
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.file.Files; 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths; 
 import java.nio.file.StandardCopyOption; 
 import java.util.ResourceBundle; 
@@ -32,9 +35,10 @@ import org.icepdf.ri.util.PropertiesManager;
 /** Copyright: Ba
  */
 public class Main implements ActionListener{
-	public String PfadStringBS;
+	public Path destination, source;
 	public URI pfad;
-	public String aktuellesFile;
+	public String aktuellesFile, PfadStringBS;
+	public JFrame fr;
 	public JMenuItem Oeffnen;
 	public JMenuItem Drucken;
 	static boolean running = false;
@@ -52,7 +56,7 @@ public class Main implements ActionListener{
 	public transient int height = 600;
 	void createGui(SwingController controller){
 		aktuellesFile = new String();
-		JFrame fr = new JFrame("Betriebsanweisungen erstellen");
+		fr = new JFrame("Betriebsanweisungen erstellen");
 		fr.setExtendedState(Frame.MAXIMIZED_BOTH);
 		fr.setSize(widthnormal,height); //Mindestgröße des Jframes
 		fr.setResizable(true);
@@ -104,28 +108,45 @@ public class Main implements ActionListener{
 	}
 	public void actionPerformed(ActionEvent e)
 	{
-		//FileChooser
+		//FileChooser + PDF-Datei kopiert und geöffnet (übergeben mit controller)
 		if(e.getActionCommand() == Oeffnen.getActionCommand()){
 			JFileChooser fc = new JFileChooser();
 			fc.setAcceptAllFileFilterUsed(false);
 			fc.addChoosableFileFilter(new filterpdf());
 			int dialog = fc.showDialog(fc, "Öffnen");
-			File temp = fc.getSelectedFile();//Datei in temp gespeichert
+			File pdf = fc.getSelectedFile();//Datei in temp gespeichert
 			if(dialog == 0){
-				aktuellesFile = fc.getCurrentDirectory().toString() + "\\" + temp.getName();//Pfad der PDF als String gespeichert
-				PfadStringBS = aktuellesFile.replace("\\", "\\\\");
+				aktuellesFile = fc.getCurrentDirectory().toString() + "\\" + pdf.getName();//Pfad der PDF als String gespeichert
 			}
+			PfadStringBS = aktuellesFile.replace("\\", "\\\\");//Pfad der PDF für eclipse (mit doppelten Backslash)
+			File temp = pdf;//PDF Datei als temp gespeichert (s.Files.copy...)
+			String destinationtemp = "C:\\Users\\%Userprofile%\\AppData\\Local\\Temp\\" + pdf.getName();//Pfad für die temporär erzeugte Datei
+			source = Paths.get(PfadStringBS);//Quellenpfad der PDF
+			destination = Paths.get(destinationtemp);//Zielpfad der temporären PDF
 			try {
-				Files.copy(Paths.get(PfadStringBS), Paths.get(PfadStringBS), 
-						StandardCopyOption.REPLACE_EXISTING);
+				Files.copy(source, destination, StandardCopyOption.COPY_ATTRIBUTES);
+				
 			} catch (IOException e1) {
 				e1.printStackTrace();
-			} 
-			//temp.deleteOnExit();
+			}
+			fr.addWindowListener(new WindowAdapter()
+	        {
+	            @Override
+	            public void windowClosing(WindowEvent e)
+	            {
+	            	try {
+						Files.copy(destination, source, StandardCopyOption.REPLACE_EXISTING);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+	                e.getWindow().dispose();
+	            }
+	        });
+			temp.deleteOnExit();
 			if (aktuellesFile == null) {
 				System.err.println("Die Datei ist beschädigt oder hat nicht die Endung .pdf!");
 			} 
-			controller.openDocument(aktuellesFile);
+			controller.openDocument(destinationtemp);
 		}
 	}
 }
