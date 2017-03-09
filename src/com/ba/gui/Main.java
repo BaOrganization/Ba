@@ -158,9 +158,6 @@ public class Main implements ActionListener{
 				}
 			});
 			temp.deleteOnExit();
-			if (aktuellesFile == null) {//gibt er auch nicht aus. Fehler!
-				System.err.println("Die Datei ist beschädigt oder hat nicht die Endung .pdf!");
-			} 
 			controller.openDocument(destinationtemp);//Übergibt den Dateipfad der temp Datei zum Öffnen an den PDFViewer 
 		}
 	}
