@@ -21,7 +21,6 @@ import javax.swing.SwingUtilities;
 
 //PdfViewer
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths; 
@@ -31,18 +30,26 @@ import java.util.ResourceBundle;
 import org.icepdf.ri.common.SwingController; 
 import org.icepdf.ri.common.SwingViewBuilder; 
 import org.icepdf.ri.util.PropertiesManager; 
+/**JavaDocs Dokumentation zu ICEPDF: 
+http://res.icesoft.org/docs/icepdf/latest/viewer/index.html
+http://res.icesoft.org/docs/icepdf/latest/core/index.html
+http://www.icesoft.org/wiki/display/PDF/Customizing+the+Viewer*/
 
 /** Copyright: Ba
  */
 public class Main implements ActionListener{
-	public Path destination, source;
-	public URI pfad;
-	public String aktuellesFile, PfadStringBS;
+	/**Deklaration*/
+	public Path destination, source;//Pfade der PDF-Dateien (temp + original)
+	public String aktuellesFile;//Pfad als String, aktuellesFile z.B. zum Anzeigen
 	public JFrame fr;
-	public JMenuItem Oeffnen;
-	public JMenuItem Drucken;
+	public JMenuItem Oeffnen, Drucken, Speichern;
 	static boolean running = false;
-	static SwingController controller = new SwingController();
+	static SwingController controller = new SwingController();//Bibliothek IcePDF: Übergibt dem PDFViewer in createGUI(controller) die Datei
+	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();//Bildschirmgröße in Pixel gespeichert (->Divider in der Mitte)
+	public transient int width = gd.getDisplayMode().getWidth();//width für divider setzen
+	public transient int widthnormal = 900;//Fensterbreite
+	public transient int height = 600;//Fensterhöhe
+
 
 	public static void main(String ... args) {
 		running = true;
@@ -50,36 +57,32 @@ public class Main implements ActionListener{
 			public void run() {new Main().createGui(controller);}
 		});
 	}
-	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-	public transient int width = gd.getDisplayMode().getWidth();
-	public transient int widthnormal = 900;
-	public transient int height = 600;
-	void createGui(SwingController controller){
-		aktuellesFile = new String();
+
+
+	/**Konstruktor*/
+	void createGui(SwingController controller){//controller übergibt die PDFDatei an den Viewer
 		fr = new JFrame("Betriebsanweisungen erstellen");
 		fr.setExtendedState(Frame.MAXIMIZED_BOTH);
-		fr.setSize(widthnormal,height); //Mindestgröße des Jframes
+		fr.setSize(widthnormal,height);//Mindestgröße des Jframes
 		fr.setResizable(true);
 		fr.setDefaultCloseOperation(3);
-		fr.setLocationRelativeTo(new JFrame());
 
+		/**MenuBar*/
 		{
 			JMenuBar mb = new JMenuBar();
-			JMenu BA = new JMenu("BA");
 			JMenu Datei = new JMenu("Datei");
 			JMenu Help = new JMenu("Hilfe");
-			mb.add(BA);
 			mb.add(Datei);
 			mb.add(Help);
 			Oeffnen = new JMenuItem("Öffnen");
 			Oeffnen.addActionListener(this);
 			Drucken = new JMenuItem("Drucken");
 			Drucken.addActionListener(this);
-			JMenuItem Speichern = new JMenuItem("Speichern");
+			Speichern = new JMenuItem("Speichern");
+			Speichern.addActionListener(this);
 			Datei.add(Oeffnen);
 			Datei.add(Speichern);
 			Datei.add(Drucken);
-
 			fr.setJMenuBar(mb);
 		}
 
@@ -92,61 +95,73 @@ public class Main implements ActionListener{
 		fr.add(splitPane);
 		fr.setVisible(running);
 
-		//PDFViewer
-		PropertiesManager properties = new PropertiesManager( 
-				System.getProperties(), 
-				ResourceBundle 
-				.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE)); 
-		properties.set(PropertiesManager.PROPERTY_DEFAULT_ZOOM_LEVEL, "1.0"); 
-		properties.set(PropertiesManager.PROPERTY_VIEWPREF_HIDETOOLBAR, "false"); 
+		/**PDFViewer*/
+		{
+			PropertiesManager properties = new PropertiesManager( 
+					System.getProperties(), 
+					ResourceBundle 
+					.getBundle(PropertiesManager.DEFAULT_MESSAGE_BUNDLE)); 
+			//Werte noch mit defaults in der doc vergleichen. Übereinstimmung => Rauslöschen!
+			properties.set(PropertiesManager.PROPERTY_DEFAULT_ZOOM_LEVEL, "1.0"); 
+			properties.set(PropertiesManager.PROPERTY_VIEWPREF_HIDETOOLBAR, "false"); 
+			properties.set(PropertiesManager.PROPERTY_SHOW_KEYBOARD_SHORTCUTS, "true");
+			properties.set(PropertiesManager.PROPERTY_SHOW_STATUSBAR, "true");
+			properties.set(PropertiesManager.PROPERTY_VIEWPREF_FITWINDOW, "true");
+			properties.set(PropertiesManager.PROPERTY_VIEWPREF_HIDEMENUBAR, "false");
+			properties.set(PropertiesManager.PROPERTY_VIEWPREF_HIDEMENUBAR, "false");
+			// nur für Event-Handling notwendig 
+			// controller.setIsEmbeddedComponent(true); 
+			SwingViewBuilder builder = new SwingViewBuilder(controller, properties); 
+			JPanel viewerPanel = builder.buildViewerPanel(); 
+			pLeft.add(viewerPanel); 
+		}
 
-		// nur für Event-Handling notwendig 
-		// controller.setIsEmbeddedComponent(true); 
-		SwingViewBuilder builder = new SwingViewBuilder(controller, properties); 
-		JPanel viewerPanel = builder.buildViewerPanel(); 
-		pLeft.add(viewerPanel); 
 	}
+
+
+	/**Aktionen der Buttons (JMenuItem,...)*/
 	public void actionPerformed(ActionEvent e)
 	{
 		//FileChooser + PDF-Datei kopiert und geöffnet (übergeben mit controller)
 		if(e.getActionCommand() == Oeffnen.getActionCommand()){
 			JFileChooser fc = new JFileChooser();
 			fc.setAcceptAllFileFilterUsed(false);
-			fc.addChoosableFileFilter(new filterpdf());
+			fc.addChoosableFileFilter(new filterpdf());//Filtert die Pdf, seperate Klasse
 			int dialog = fc.showDialog(fc, "Öffnen");
-			File pdf = fc.getSelectedFile();//Datei in temp gespeichert
-			if(dialog == 0){
-				aktuellesFile = fc.getCurrentDirectory().toString() + "\\" + pdf.getName();//Pfad der PDF als String gespeichert
+			File pdf = fc.getSelectedFile();//Originaldatei in pdf gespeichert
+			if(dialog == 0){//a: dialog muss mir jemand mal erklären :D (Sinn davon)
+				aktuellesFile = fc.getCurrentDirectory().toString() + "\\" + pdf.getName();//Pfad der PDF-Datei als String gespeichert
 			}
-			PfadStringBS = aktuellesFile.replace("\\", "\\\\");//Pfad der PDF für eclipse (mit doppelten Backslash)
-			File temp = pdf;//PDF Datei als temp gespeichert (s.Files.copy...)
-			String destinationtemp = "C:\\Users\\%Userprofile%\\AppData\\Local\\Temp\\" + pdf.getName();//Pfad für die temporär erzeugte Datei
-			source = Paths.get(PfadStringBS);//Quellenpfad der PDF
-			destination = Paths.get(destinationtemp);//Zielpfad der temporären PDF
+			String PfadStringBS = aktuellesFile.replace("\\", "\\\\");//Pfad der PDF-Datei für Eclipse (mit doppelten Backslash) als String
+			File temp = pdf;//PDF-Datei als temp gespeichert (s.Files.copy...)
+			String destinationtemp = "C:\\Users\\%Userprofile%\\AppData\\Local\\Temp\\" + pdf.getName();//Pfad für die manuell temporär erzeugte PDF-Datei
+			source = Paths.get(PfadStringBS);//Quellenpfad der PDF-Datei
+			destination = Paths.get(destinationtemp);//Zielpfad der temporären PDF-Datei
 			try {
-				Files.copy(source, destination, StandardCopyOption.COPY_ATTRIBUTES);
-				
-			} catch (IOException e1) {
+				Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+			} 
+			catch (IOException e1) {
 				e1.printStackTrace();
 			}
+			//Versuch, bei Beendigung die Originaldatei durch die temp zu überschreiben. Klappt nicht!
 			fr.addWindowListener(new WindowAdapter()
-	        {
-	            @Override
-	            public void windowClosing(WindowEvent e)
-	            {
-	            	try {
+			{
+				@Override
+				public void windowClosing(WindowEvent e)
+				{
+					try {
 						Files.copy(destination, source, StandardCopyOption.REPLACE_EXISTING);
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
-	                e.getWindow().dispose();
-	            }
-	        });
+					e.getWindow().dispose();
+				}
+			});
 			temp.deleteOnExit();
-			if (aktuellesFile == null) {
+			if (aktuellesFile == null) {//gibt er auch nicht aus. Fehler!
 				System.err.println("Die Datei ist beschädigt oder hat nicht die Endung .pdf!");
 			} 
-			controller.openDocument(destinationtemp);
+			controller.openDocument(destinationtemp);//Übergibt den Dateipfad der temp Datei zum Öffnen an den PDFViewer 
 		}
 	}
 }

@@ -1,13 +1,17 @@
-1. Dateiexplorer (fertig)
+1. Dateiexplorer (fertig), Überlegung: Den vom PDFViewer nehmen?
 2. Speichern
 3. Drucken (Tutorial: https://www.youtube.com/watch?v=Q9ZNrfsmI2w&index=5&list=PL13I0cBsOJUdips5ZSFzVUF8PkzdY12kT&ab_channel=JaDaHB1)
-4. Umlaute wurden geÃ¤ndert. Problem?
-5. PDF-Viewer 
-Comments von mir (Andreas) sind als a.#: markiert
+4. PDF-Viewer: noch Probleme/Fehler
 
-#j: damit das mit den Umlauten klappt sollten wir in eclipse alle das encoding utf-8 verwenden :) 
+Comments mit eurem Anfangsbuchstaben markieren (a: j: t:)
+
+
+j: damit das mit den Umlauten klappt sollten wir in eclipse alle das encoding utf-8 verwenden :) 
 a: Hab' gedacht das ist Standard XD Muss in der Schule noch eingestellt werden!
 @Tobias, du auch :D  :
 Window -> Preferences -> General -> Workspace -> Text file encoding: Other:UTF-8
 
+
 +a: rechtsklick auf die Zahlenleiste links und show annotations markieren, dann seht ihr unten gleich die neuesten änderungen :)
++a: Ich hab' für die JavaDoc Dokumentation von Icepdf nen Link unter die Imports geschrieben + nen kleinen Hilfelink
+Hab außerdem grad gelesen: icepdf kann auch text einer pdf seperat auslesen, könnte vielleicht 'n guter Anhaltspunkt werden!
