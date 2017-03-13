@@ -15,9 +15,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
 
 //PdfViewer
 import java.io.IOException;
@@ -40,9 +42,11 @@ http://www.icesoft.org/wiki/display/PDF/Customizing+the+Viewer*/
 public class Main implements ActionListener{
 	/**Deklaration*/
 	public Path destination, source;//Pfade der PDF-Dateien (temp + original)
-	public String aktuellesFile;//Pfad als String, aktuellesFile z.B. zum Anzeigen
+	public String aktuellesFile, PfadStringBS, destinationtemp ;//Bedeutung: s.u.
+	public File temp, pdf;
 	public JFrame fr;
 	public JMenuItem Oeffnen, Drucken, Speichern;
+	public boolean tempcreated = false;
 	static boolean running = false;
 	static SwingController controller = new SwingController();//Bibliothek IcePDF: Übergibt dem PDFViewer in createGUI(controller) die Datei
 	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();//Bildschirmgröße in Pixel gespeichert (->Divider in der Mitte)
@@ -65,8 +69,16 @@ public class Main implements ActionListener{
 		fr.setExtendedState(Frame.MAXIMIZED_BOTH);
 		fr.setSize(widthnormal,height);//Mindestgröße des Jframes
 		fr.setResizable(true);
-		fr.setDefaultCloseOperation(3);
-
+		fr.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);//wird seperat mit Bestätigung 
+		//Bei Beendigung die Originaldatei durch die temp überschreiben(s.u.) + Neues Verhalten für das Schließen des Fensters
+		fr.addWindowListener(new WindowAdapter()
+		{
+			public void windowClosing(WindowEvent e)
+			{
+				exit();
+			}
+		});
+		
 		/**MenuBar*/
 		{
 			JMenuBar mb = new JMenuBar();
@@ -91,11 +103,11 @@ public class Main implements ActionListener{
 		JPanel pRight = new JPanel();
 		pRight.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, pLeft, pRight);
-		splitPane.setDividerLocation((int) (width/2.0));
+		splitPane.setDividerLocation((int) (width/1.5));
 		fr.add(splitPane);
 		fr.setVisible(running);
 
-		/**PDFViewer*/
+		/**PDFViewer GUI*/
 		{
 			PropertiesManager properties = new PropertiesManager( 
 					System.getProperties(), 
@@ -128,13 +140,13 @@ public class Main implements ActionListener{
 			fc.setAcceptAllFileFilterUsed(false);
 			fc.addChoosableFileFilter(new filterpdf());//Filtert die Pdf, seperate Klasse
 			int dialog = fc.showDialog(fc, "Öffnen");
-			File pdf = fc.getSelectedFile();//Originaldatei in pdf gespeichert
+			pdf = fc.getSelectedFile();//Originaldatei in pdf gespeichert
 			if(dialog == 0){//a: dialog muss mir jemand mal erklären :D (Sinn davon)
 				aktuellesFile = fc.getCurrentDirectory().toString() + "\\" + pdf.getName();//Pfad der PDF-Datei als String gespeichert
 			}
-			String PfadStringBS = aktuellesFile.replace("\\", "\\\\");//Pfad der PDF-Datei für Eclipse (mit doppelten Backslash) als String
-			File temp = pdf;//PDF-Datei als temp gespeichert (s.Files.copy...)
-			String destinationtemp = "C:\\Users\\%Userprofile%\\AppData\\Local\\Temp\\" + pdf.getName();//Pfad für die manuell temporär erzeugte PDF-Datei
+			PfadStringBS = aktuellesFile.replace("\\", "\\\\");//Pfad der PDF-Datei für Eclipse (mit doppelten Backslash) als String
+			temp = pdf;//PDF-Datei als temp gespeichert (s.Files.copy...)
+			destinationtemp = "C:\\Users\\%Userprofile%\\AppData\\Local\\Temp\\" + pdf.getName();//Pfad für die manuell temporär erzeugte PDF-Datei
 			source = Paths.get(PfadStringBS);//Quellenpfad der PDF-Datei
 			destination = Paths.get(destinationtemp);//Zielpfad der temporären PDF-Datei
 			try {
@@ -143,22 +155,35 @@ public class Main implements ActionListener{
 			catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			//Versuch, bei Beendigung die Originaldatei durch die temp zu überschreiben. Klappt nicht!
-			fr.addWindowListener(new WindowAdapter()
-			{
-				@Override
-				public void windowClosing(WindowEvent e)
-				{
-					try {
-						Files.copy(destination, source, StandardCopyOption.REPLACE_EXISTING);
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					e.getWindow().dispose();
-				}
-			});
+			tempcreated = true;
 			temp.deleteOnExit();
 			controller.openDocument(destinationtemp);//Übergibt den Dateipfad der temp Datei zum Öffnen an den PDFViewer 
+			
+		}
+	}
+	/**Gibt einen OptionPane zum Beenden an mit Option speichern oder nicht*/
+	public void exit(){
+		int result = JOptionPane.showConfirmDialog(null,
+				"Sollen die Dateien gespeichert werden?",
+				"Programm beenden",
+				JOptionPane.YES_NO_OPTION);
+		switch(result){
+		case JOptionPane.YES_OPTION:
+			//Speichert die Datei bei Existenz wieder am Originalpfad
+			if(tempcreated){
+				try {
+					Files.copy(destination, source, StandardCopyOption.REPLACE_EXISTING);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			else{
+		        JOptionPane.showMessageDialog(null, "Es waren keine Dateien geöffnet \n"
+		        		+ "OK zum Beenden drücken", "Information", JOptionPane.INFORMATION_MESSAGE); 
+			}
+			System.exit(0);
+		case JOptionPane.NO_OPTION:
+			System.exit(0);
 		}
 	}
 }

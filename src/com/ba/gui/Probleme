@@ -1,5 +1,6 @@
 Folgende Probleme/Fehler sind noch zu lösen:
 
-1. PDF-Viewer Größe anpassen. Erst nach verkleinern und wieder vergrößern des Fensters sichtbar
-2. File.copy klappt nicht so ganz + erkennen, wenn das fenster geschlossen wird und dann die temp datei zum originalpfad kopieren und überschreiben
-evtl.: Beim schließen Nachfragefenster: Wollen Sie speichern? ...
+1. PDF-Viewer Größe anpassen. Erst nach verkleinern und wieder vergrößern des Fensters sichtbar - vorläufig durch verschieben
+des Dividers "gelöst"
+
+2. File.copy klappt nicht so ganz (nochmal probieren). Problem mit Fenster schließen gelöst!
