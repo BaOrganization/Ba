@@ -42,7 +42,7 @@ http://www.icesoft.org/wiki/display/PDF/Customizing+the+Viewer*/
 public class Main implements ActionListener{
 	/**Deklaration*/
 	public Path destination, source;//Pfade der PDF-Dateien (temp + original)
-	public String aktuellesFile, PfadStringBS, destinationtemp ;//Bedeutung: s.u.
+	public String aktuellesFile, PfadStringBS, destinationtemp;//Bedeutung: s.u.
 	public File temp, pdf;
 	public JFrame fr;
 	public JMenuItem Oeffnen, Drucken, Speichern;
@@ -103,7 +103,7 @@ public class Main implements ActionListener{
 		JPanel pRight = new JPanel();
 		pRight.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, pLeft, pRight);
-		splitPane.setDividerLocation((int) (width/1.5));
+		splitPane.setDividerLocation((int) (width/2));
 		fr.add(splitPane);
 		fr.setVisible(running);
 
@@ -121,13 +121,16 @@ public class Main implements ActionListener{
 			properties.set(PropertiesManager.PROPERTY_VIEWPREF_FITWINDOW, "true");
 			properties.set(PropertiesManager.PROPERTY_VIEWPREF_HIDEMENUBAR, "false");
 			properties.set(PropertiesManager.PROPERTY_VIEWPREF_HIDEMENUBAR, "false");
+			properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FIT, "false");
+			properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FORMS, "false");
+			properties.set(PropertiesManager.PROPERTY_PRINT_MEDIA_SIZE_WIDTH, "true");
+			System.getProperties().put("viewer.toolbar.pageFit.actualsize.tooltip", "true");
 			// nur für Event-Handling notwendig 
 			// controller.setIsEmbeddedComponent(true); 
 			SwingViewBuilder builder = new SwingViewBuilder(controller, properties); 
 			JPanel viewerPanel = builder.buildViewerPanel(); 
 			pLeft.add(viewerPanel); 
 		}
-
 	}
 
 
@@ -146,7 +149,8 @@ public class Main implements ActionListener{
 			}
 			PfadStringBS = aktuellesFile.replace("\\", "\\\\");//Pfad der PDF-Datei für Eclipse (mit doppelten Backslash) als String
 			temp = pdf;//PDF-Datei als temp gespeichert (s.Files.copy...)
-			destinationtemp = "C:\\Users\\%Userprofile%\\AppData\\Local\\Temp\\" + pdf.getName();//Pfad für die manuell temporär erzeugte PDF-Datei
+			//destinationtemp = "C:\\Users\\%Userprofile%\\AppData\\Local\\Temp\\" + pdf.getName();//Pfad für die manuell temporär erzeugte PDF-Datei
+			destinationtemp = "Z:\\Informatik Q11 und Q12\\BAWs\\" + pdf.getName();//Pfad für die manuell temporär erzeugte PDF-Datei
 			source = Paths.get(PfadStringBS);//Quellenpfad der PDF-Datei
 			destination = Paths.get(destinationtemp);//Zielpfad der temporären PDF-Datei
 			try {
