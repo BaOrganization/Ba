@@ -123,7 +123,6 @@ public class Main implements ActionListener{
 			properties.set(PropertiesManager.PROPERTY_VIEWPREF_HIDEMENUBAR, "false");
 			properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FIT, "false");
 			properties.set(PropertiesManager.PROPERTY_SHOW_TOOLBAR_FORMS, "false");
-			properties.set(PropertiesManager.PROPERTY_PRINT_MEDIA_SIZE_WIDTH, "true");
 			System.getProperties().put("viewer.toolbar.pageFit.actualsize.tooltip", "true");
 			// nur für Event-Handling notwendig 
 			// controller.setIsEmbeddedComponent(true); 
@@ -160,7 +159,6 @@ public class Main implements ActionListener{
 				e1.printStackTrace();
 			}
 			tempcreated = true;
-			temp.deleteOnExit();
 			controller.openDocument(destinationtemp);//Übergibt den Dateipfad der temp Datei zum Öffnen an den PDFViewer 
 			
 		}
@@ -186,8 +184,10 @@ public class Main implements ActionListener{
 		        		+ "OK zum Beenden drücken", "Information", JOptionPane.INFORMATION_MESSAGE); 
 			}
 			System.exit(0);
+			temp.delete();
 		case JOptionPane.NO_OPTION:
 			System.exit(0);
+			temp.delete();
 		}
 	}
 }
