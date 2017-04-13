@@ -8,7 +8,6 @@ Comments mit eurem Anfangsbuchstaben markieren (a: j: t:)
 
 j: damit das mit den Umlauten klappt sollten wir in eclipse alle das encoding utf-8 verwenden :) 
 a: Hab' gedacht das ist Standard XD Muss in der Schule noch eingestellt werden!
-@Tobias, du auch :D  :
 Window -> Preferences -> General -> Workspace -> Text file encoding: Other:UTF-8
 
 

@@ -1,3 +1,8 @@
+/**Ein funktionsfähiger PDFViewer, Codebeispiel mit allen Bestandteilen!
+ * */
+
+
+
 package com.ba.gui;
 
 import java.io.File; 

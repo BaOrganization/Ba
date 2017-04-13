@@ -3,4 +3,4 @@ Folgende Probleme/Fehler sind noch zu lösen:
 1. PDF-Viewer Größe anpassen. Erst nach verkleinern und wieder vergrößern des Fensters sichtbar - vorläufig durch verschieben
 des Dividers "gelöst"
 
-2. File.copy klappt nicht so ganz (nochmal probieren). Problem mit Fenster schließen gelöst!
+2. File.copy muss umgeschrieben werden, sobald BA (rechter pane) "fertig" ist. -> Nicht pdf speichern, sondern BAs, PDFS werden nicht verändert!!

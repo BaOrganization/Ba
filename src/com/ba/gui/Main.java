@@ -41,7 +41,7 @@ http://www.icesoft.org/wiki/display/PDF/Customizing+the+Viewer*/
  */
 public class Main implements ActionListener{
 	/**Deklaration*/
-	public Path destination, source;//Pfade der PDF-Dateien (temp + original)
+	public Path destination, source;//Pfade der BA-Dateien (temp + original)
 	public String aktuellesFile, PfadStringBS, destinationtemp;//Bedeutung: s.u.
 	public File temp, pdf;
 	public JFrame fr;
@@ -143,7 +143,7 @@ public class Main implements ActionListener{
 			fc.addChoosableFileFilter(new filterpdf());//Filtert die Pdf, seperate Klasse
 			int dialog = fc.showDialog(fc, "Öffnen");
 			pdf = fc.getSelectedFile();//Originaldatei in pdf gespeichert
-			if(dialog == 0){//a: dialog muss mir jemand mal erklären :D (Sinn davon)
+			if(dialog == 0){//<-- a: dialog muss mir jemand mal erklären :D (Sinn davon)
 				aktuellesFile = fc.getCurrentDirectory().toString() + "\\" + pdf.getName();//Pfad der PDF-Datei als String gespeichert
 			}
 			PfadStringBS = aktuellesFile.replace("\\", "\\\\");//Pfad der PDF-Datei für Eclipse (mit doppelten Backslash) als String
@@ -159,11 +159,10 @@ public class Main implements ActionListener{
 				e1.printStackTrace();
 			}
 			tempcreated = true;
-			controller.openDocument(destinationtemp);//Übergibt den Dateipfad der temp Datei zum Öffnen an den PDFViewer 
-			
+			controller.openDocument(destinationtemp);//Übergibt den Dateipfad der temp Datei zum Öffnen an den PDFViewer
 		}
 	}
-	/**Gibt einen OptionPane zum Beenden an mit Option speichern oder nicht*/
+	/**Gibt einen OptionPane zum Beenden an mit Option speichern der BA oder nicht*/
 	public void exit(){
 		int result = JOptionPane.showConfirmDialog(null,
 				"Sollen die Dateien gespeichert werden?",
