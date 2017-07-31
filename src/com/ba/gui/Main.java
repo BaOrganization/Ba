@@ -37,7 +37,7 @@ http://res.icesoft.org/docs/icepdf/latest/viewer/index.html
 http://res.icesoft.org/docs/icepdf/latest/core/index.html
 http://www.icesoft.org/wiki/display/PDF/Customizing+the+Viewer*/
 
-/** Copyright: Ba
+/** Copyright: Andreas Götz
  */
 public class Main implements ActionListener{
 	/**Deklaration*/
